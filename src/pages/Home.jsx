@@ -1,15 +1,14 @@
+import React from "react";
+import Random from "../components/Random";
 import Veggie from "../components/Veggie";
-import Popular from "../components/Popular";
-
-import React from 'react'
 
 function Home() {
-    return (
-        <div>
-            <Veggie />
-            <Popular />
-        </div>
-    )
+  return (
+    <div>
+      <Veggie />
+      <Random />
+    </div>
+  );
 }
 
-export default Home
+export default Home;

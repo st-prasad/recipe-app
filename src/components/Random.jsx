@@ -5,35 +5,42 @@ import styled from "styled-components";
 import noCImage from "../images/nocontent.png";
 import "./components.css";
 
-function Veggie() {
-  const [veggie, setveggie] = useState([]);
+function Popular() {
+  const [random, setRandom] = useState([]);
 
   // useeffect with empty dependancy array => run this only once after component renders
   useEffect(() => {
-    veggieRecipes();
+    randomRecipes();
 
+    // return () => {
+    //     second
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const veggieRecipes = async () => {
-    const checkveggie = localStorage.getItem("veggie");
+  const randomRecipes = async () => {
+    const checkRandom = localStorage.getItem("random");
 
-    if (checkveggie) {
-      setveggie(JSON.parse(checkveggie));
+    if (checkRandom) {
+      setRandom(JSON.parse(checkRandom));
+      //   if exist on local Storage, turn from string to an array.
+      //   else fetch from api and springify and store on local storage
     } else {
+      // custom environment variables must start with REACT_APP_ to avoid accidentally exposing a private key on the machine that could have the same name
+
       const api = await fetch(
-        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6&tags=vegetarian`
+        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6`
       );
       const data = await api.json();
-      localStorage.setItem("veggie", JSON.stringify(data.recipes));
-      setveggie(data.recipes);
-      console.log(veggie);
+      localStorage.setItem("random", JSON.stringify(data.recipes));
+      setRandom(data.recipes);
+      console.log(random);
     }
   };
 
   return (
     <WrapperDiv>
-      <h3>veggie</h3>
+      <h3>random</h3>
       <Splide
         options={{
           perPage: 3,
@@ -41,7 +48,7 @@ function Veggie() {
           drag: "free",
         }}
       >
-        {veggie.map((obj) => {
+        {random.map((obj) => {
           return (
             <SplideSlide key={obj.id}>
               {!obj.image ? (
@@ -76,4 +83,8 @@ const CardDiv = styled.div`
   }
 `;
 
-export default Veggie;
+// Splide.defaults = {
+//   perPage: 3,
+// };
+
+export default Popular;
