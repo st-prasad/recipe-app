@@ -3,10 +3,21 @@ import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 
 function Search() {
+  const [input, setinput] = useState("");
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <FormStyle>
+    <FormStyle onSubmit={submitHandler}>
       <div>
-        <input type="text" />
+        <FaSearch></FaSearch>
+        <input
+          onChange={(event) => setinput(event.target.value)}
+          type="text"
+          placeholder="search recipes"
+        />
       </div>
     </FormStyle>
   );
@@ -20,7 +31,7 @@ const FormStyle = styled.form`
   }
   input {
     border: none;
-    background: linear-gradient(to right, #c5dcff, #2980b9);
+    background: linear-gradient(to right, white, #52afee);
     font-size: 1.5rem;
     color: black;
     padding: 1rem 3rem;
@@ -28,7 +39,7 @@ const FormStyle = styled.form`
     border-radius: 5rem;
     outline: 10rem;
     width: 100%;
-    margin: auto;
+    margin: 1rem auto;
     box-sizing: border-box;
   }
   svg {
