@@ -57,10 +57,10 @@ const StyledNavLink = styled(NavLink)`
     font-size: 1.5rem;
   }
   &:hover {
-    background: linear-gradient(35deg, #a8c0ff, #3f2b96);
+    background: linear-gradient(35deg, #c5d5ff, #5e43d8);
   }
   &.active {
-    background: linear-gradient(115deg, #a8c0ff, #3f2b96);
+    background: linear-gradient(115deg, #c3d4ff, #9d87ff);
     h4 {
       color: white;
     }

@@ -1,8 +1,10 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import noCImage from "../images/nocontent.png";
+// import Recipe from "../pages/Recipe";
 import "./components.css";
 
 function Popular() {
@@ -58,8 +60,10 @@ function Popular() {
                 </CardDiv>
               ) : (
                 <CardDiv>
-                  <p>{obj.title}</p>
-                  <img src={obj.image} alt={obj.title} />
+                  <Link to={"/recipe/" + obj.id}>
+                    <p>{obj.title}</p>
+                    <img src={obj.image} alt={obj.title} />
+                  </Link>
                 </CardDiv>
               )}
             </SplideSlide>
@@ -77,9 +81,45 @@ const CardDiv = styled.div`
   min-height: 25rem;
   border-radius: 2rem;
   overflow: hidden;
+  position: relative;
+  margin: 1rem;
 
   img {
-    margin: 4rem;
+    /* margin: 4rem;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; */
+
+    /* display: block; */
+    /* max-height: 300px; */
+    /* max-width: 300px; */
+    /* margin: 0 auto; */
+    /* float: none; */
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+  }
+  p {
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, 0%);
+    color: black;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(231 220 220 / 70%);
+    border-radius: 0.5rem;
   }
 `;
 

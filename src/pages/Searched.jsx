@@ -1,5 +1,6 @@
+import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function Searched() {
   const [searched, setsearched] = useState([]);
@@ -9,9 +10,26 @@ function Searched() {
     getsearched(params.search);
   }, [params.search]);
 
-  const getsearched = (kk) => console.log(kk);
+  const getsearched = async (name) => {
+    const data = await fetch(
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${name}`
+    );
+    const recipes = await data.json();
+    setsearched(recipes.results);
+  };
 
-  return <div>Searched</div>;
+  const searchedCardComp = searched.map((elem) => {
+    return (
+      <motion.div key={elem.id}>
+        <Link to={"/recipe/" + elem.id}>
+          <img src={elem.image} alt="elem.title" />
+          <h4>{elem.title}</h4>
+        </Link>
+      </motion.div>
+    );
+  });
+
+  return <div>{searchedCardComp}</div>;
 }
 
 export default Searched;
