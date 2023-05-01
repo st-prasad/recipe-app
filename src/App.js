@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename="/recipe-app">
       <div>
         <Link to={"/"}>Home</Link>
       </div>
