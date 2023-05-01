@@ -3,21 +3,29 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 function Recipe() {
-  const [recipeData, setrecipeData] = useState([{}]);
+  const [recipeData, setrecipeData] = useState({});
   const [activeTabInstructions, setactiveTabInstructions] = useState([true]);
   let params = useParams();
 
   useEffect(() => {
+    const fetchRecipeData = async () => {
+      try {
+        const recipeId = params.name;
+        const apiKey = process.env.REACT_APP_API_KEY;
+        const apiUrl = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`;
+  
+        const data = await fetch(apiUrl);
+        const recipeDataResult = await data.json();
+  
+        setrecipeData(recipeDataResult);
+      } catch (error) {
+        console.error("Error fetching recipe data:", error);
+      }
+    };
+  
     fetchRecipeData();
-  }, []);
-
-  const fetchRecipeData = async () => {
-    const data = await fetch(
-      `https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`
-    );
-    const recipeDataResult = await data.json();
-    setrecipeData(recipeDataResult);
-  };
+  }, [params.name]);
+  
 
   return (
     <DetailWrapper>
@@ -26,7 +34,7 @@ function Recipe() {
       </TitleDiv>
       <ImageWrapper>
         <ImageDiv>
-          <img src={recipeData.image} alt="recipeData.title" />
+          <img src={recipeData.image} alt={recipeData.title} />
         </ImageDiv>
         <div>
           <Button
@@ -54,9 +62,10 @@ function Recipe() {
         ) : (
           <div>
             <ul>
-              {recipeData.extendedIngredients.map((elem) => (
-                <li key={elem.id}>{elem.original}</li>
-              ))}
+              {recipeData.extendedIngredients &&
+                recipeData.extendedIngredients.map((elem) => (
+                  <li key={elem.id}>{elem.original}</li>
+                ))}
             </ul>
           </div>
         )}
